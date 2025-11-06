@@ -1,0 +1,257 @@
+## 🔹 *Assignment 5(a): Create a Simple Mobile Website using jQuery Mobile*
+
+---
+
+### 📘 *7-Point Theory*
+
+1. *Introduction to jQuery Mobile:*
+   jQuery Mobile is a lightweight web framework built on top of jQuery, designed to create responsive and touch-friendly websites optimized for smartphones and tablets.
+
+2. *Mobile-First Design Concept:*
+   It follows a “progressive enhancement” approach, ensuring that the website functions on all devices—from basic phones to advanced smartphones.
+
+3. *Pages and Navigation:*
+   In jQuery Mobile, each “page” is defined inside a <div> with a data-role="page" attribute. Navigation between pages occurs through internal hyperlinks (href="#pageid").
+
+4. *Theming and UI Widgets:*
+   jQuery Mobile includes built-in themes, icons, and styles for headers, footers, buttons, lists, and forms, all controlled through data-role and data-theme attributes.
+
+5. *Responsive Layout:*
+   The framework automatically adapts elements (buttons, forms, images) to different screen sizes, giving a consistent user experience across devices.
+
+6. *Advantages of jQuery Mobile:*
+
+   * Easy navigation structure
+   * Lightweight and fast loading
+   * Touch-optimized for mobile devices
+   * Supports multiple platforms (Android, iOS, etc.)
+
+7. *Applications:*
+   jQuery Mobile is widely used for mobile-friendly dashboards, personal portfolios, small business websites, and simple web apps requiring quick development.
+
+---
+
+### 🧰 *Software Requirements*
+
+* Operating System: Windows 10 / 11
+* IDE / Editor: Visual Studio Code, Sublime Text, or Notepad++
+* Browser: Google Chrome / Microsoft Edge
+* Libraries:
+
+  * jQuery v1.11.1
+  * jQuery Mobile v1.4.5
+* Internet Connection (for CDN links)
+
+---
+
+### ⚙️ *Hardware Requirements*
+
+* Processor: Intel i3 or higher
+* RAM: Minimum 4 GB
+* Storage: 500 MB free space
+* Display: 13” or larger (recommended for testing layout)
+* Mobile Device (optional): For testing responsiveness
+
+---
+
+### 🔄 *Algorithm*
+
+1. *Start*
+2. Create an HTML document with the jQuery Mobile framework linked via CDN.
+3. Define multiple pages (home, about, projects, and contact) using <div data-role="page">.
+4. Add navigation buttons using <a href="#pageid" data-role="button">.
+5. Include a header and footer on each page using data-role="header" and data-role="footer".
+6. Add images, text, and form elements in respective sections.
+7. Apply external CSS to style the elements for visual appeal.
+8. Save the file as index.html and open it in a browser.
+9. *End*
+
+---
+
+### ⚡ *Working*
+
+1. When the user opens the *index.html* file in a browser, the home page loads displaying the name “Mansi Patil” and navigation buttons.
+2. On clicking “About Me”, “Projects”, or “Contact”, the app transitions smoothly to the corresponding internal page.
+3. The *About* page describes the user’s skills and learning interests.
+4. The *Projects* page lists sample projects using jQuery Mobile’s listview.
+5. The *Contact* page allows visitors to fill out and submit their details.
+6. The layout automatically adjusts to screen size—ensuring it looks good on both desktop and mobile.
+
+---
+
+### 💻 *Code*
+
+*index.html*
+
+html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mansi Patil - Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- jQuery Mobile -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Home Page -->
+  <div data-role="page" id="home">
+    <div data-role="header" data-theme="b">
+      <h1>Mansi Patil</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <img src="https://via.placeholder.com/120" alt="Profile" class="profile-pic">
+      <h2>Hello, I'm <span class="highlight">Mansi Patil</span></h2>
+      <p>A passionate web developer learning modern web technologies!</p>
+
+      <a href="#about" data-role="button" data-icon="user">About Me</a>
+      <a href="#projects" data-role="button" data-icon="grid">Projects</a>
+      <a href="#contact" data-role="button" data-icon="mail">Contact</a>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+      <h4>&copy; 2025 Mansi Patil</h4>
+    </div>
+  </div>
+
+  <!-- About Page -->
+  <div data-role="page" id="about">
+    <div data-role="header" data-theme="b">
+      <a href="#home" data-icon="home">Home</a>
+      <h1>About Me</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <p>I'm Mansi Patil, a student who loves creating simple and creative web applications.</p>
+      <p>I enjoy learning HTML, CSS, JavaScript, and exploring AWS cloud deployment.</p>
+    </div>
+  </div>
+
+  <!-- Projects Page -->
+  <div data-role="page" id="projects">
+    <div data-role="header" data-theme="b">
+      <a href="#home" data-icon="home">Home</a>
+      <h1>My Projects</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <ul data-role="listview" data-inset="true">
+        <li><h2>To-Do List App</h2><p>A simple web app to manage daily tasks.</p></li>
+        <li><h2>Restaurant Menu Site</h2><p>Responsive food menu design.</p></li>
+        <li><h2>Portfolio Website</h2><p>You're viewing it now! Built with jQuery Mobile.</p></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Contact Page -->
+  <div data-role="page" id="contact">
+    <div data-role="header" data-theme="b">
+      <a href="#home" data-icon="home">Home</a>
+      <h1>Contact Me</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter your name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email">
+
+        <label for="message">Message:</label>
+        <textarea id="message" placeholder="Your message here..."></textarea>
+
+        <input type="submit" value="Send Message">
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+*style.css*
+
+css
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+  color: #0078d7;
+}
+
+.profile-pic {
+  width: 100px;
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.ui-content a {
+  margin: 5px 0;
+}
+
+form input, textarea {
+  width: 90%;
+  margin: 5px 0;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+input[type="submit"] {
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+
+---
+
+### ✅ *Conclusion*
+
+This experiment demonstrates how *jQuery Mobile* simplifies the creation of mobile-friendly, multi-page websites using minimal HTML and CSS. By applying built-in data roles and themes, developers can design responsive, touch-optimized interfaces suitable for any device.
+
+---
+
+### 🎯 *10 Viva Questions and Answers*
+
+1. *Q:* What is jQuery Mobile?
+   *A:* It is a touch-optimized web framework used to create responsive mobile websites.
+
+2. *Q:* What is the purpose of data-role="page"?
+   *A:* It defines a new “page” in a single HTML file.
+
+3. *Q:* Why do we use data-role="header" and data-role="footer"?
+   *A:* To create consistent headers and footers across pages.
+
+4. *Q:* What does data-theme="b" do?
+   *A:* It applies theme “b” color scheme from jQuery Mobile’s built-in themes.
+
+5. *Q:* How is navigation handled between pages?
+   *A:* Using internal links like <a href="#pageid"> for smooth transitions.
+
+6. *Q:* What is the difference between jQuery and jQuery Mobile?
+   *A:* jQuery handles DOM and animations, while jQuery Mobile focuses on mobile UI and navigation.
+
+7. *Q:* Why is meta viewport used in the head section?
+   *A:* To ensure proper scaling and responsiveness on mobile screens.
+
+8. *Q:* Can jQuery Mobile websites run offline?
+   *A:* Yes, if all required files are stored locally and not via CDN.
+
+9. *Q:* What is the main advantage of jQuery Mobile?
+   *A:* It allows rapid development of mobile-friendly sites without needing native app coding.
+
+10. *Q:* What types of apps can be built using jQuery Mobile?
+    *A:* Personal portfolios, event dashboards, contact directories, and small-scale web apps.
