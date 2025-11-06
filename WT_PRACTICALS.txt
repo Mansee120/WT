@@ -1,0 +1,687 @@
+Nice — I’ll give a complete, ready-to-use set for **each** practical in Group A: a 5–6 point theory summary, software & hardware requirements, a short algorithm (step-by-step), how it works, representative code (key files/snippets you can copy), a short conclusion, and **10 viva questions + answers**. I’ve kept examples minimal but fully working so you can expand them for your submission.
+
+---
+
+# Assignment 1 — Responsive dashboard with sidebar & stat cards (HTML, CSS, Bootstrap)
+
+## Theory (5 points)
+
+1. Responsive design: use fluid grids and media queries so layout adapts to different screen sizes.
+2. Bootstrap grid & components: fast layout with rows/cols, navbars, cards.
+3. Sidebar patterns: collapsible sidebars for navigation and content prioritization on small screens.
+4. Accessibility: use semantic elements and ARIA for keyboard navigation.
+5. Progressive enhancement: basic HTML works without JS; Bootstrap/JS add enhancements.
+
+## Software & Hardware requirements
+
+* **Software:** any code editor (VS Code), modern browser (Chrome/Firefox), Bootstrap 5 (CDN), Node/npm optional for dev server (live-server).
+* **Hardware:** any laptop/desktop; 2 GB RAM minimum.
+
+## Algorithm (high level)
+
+1. Create HTML skeleton with header, sidebar, main content.
+2. Use Bootstrap grid: sidebar column + content column.
+3. Add cards for statistics using `.card`.
+4. Make sidebar collapsible on small screens using Bootstrap collapse.
+5. Test responsiveness and tweak CSS.
+
+## Working
+
+* On large screens sidebar stays visible.
+* On small screens a hamburger toggles sidebar.
+* Cards show counts, charts (optional) and responsive stacks vertically on small screens.
+
+## Code (key files)
+
+**index.html**
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="btn btn-outline-light d-md-none" data-bs-toggle="offcanvas" data-bs-target="#sidebar">☰</button>
+    <span class="navbar-brand ms-2">My Dashboard</span>
+  </div>
+</nav>
+
+<div class="offcanvas-md offcanvas-start" tabindex="-1" id="sidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Menu</h5>
+    <button class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link active" href="#">Overview</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Exams</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+    </ul>
+  </div>
+</div>
+
+<main class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-md-3 d-none d-md-block" id="sidebar-static">
+      <!-- duplicate sidebar for md+ screens -->
+      <div class="card">
+        <div class="card-body">
+          <h5>Menu</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link active" href="#">Overview</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="row g-3">
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-center p-3">
+            <h6>Total Users</h6>
+            <h2 id="totalUsers">1,240</h2>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-center p-3">
+            <h6>Active Exams</h6>
+            <h2 id="activeExams">8</h2>
+          </div>
+        </div>
+        <!-- add more cards -->
+      </div>
+
+      <section class="mt-4">
+        <div class="card">
+          <div class="card-header">Recent Activity</div>
+          <div class="card-body">
+            <p>Latest events and logs go here...</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+```
+
+**styles.css**
+
+```css
+body { background:#f7f9fc; }
+#sidebar-static { position:sticky; top:70px; }
+.card { border-radius:8px; }
+@media (max-width:767px){
+  #sidebar-static{display:none}
+}
+```
+
+## Conclusion
+
+A Bootstrap-based dashboard is fast to build, responsive by default, and easy to extend (charts, tables). Keep UI accessible and test on multiple devices.
+
+## 10 Viva Q&A
+
+1. Q: Why use Bootstrap? A: Rapid responsive layout with prebuilt components and grid system.
+2. Q: How to make the sidebar accessible? A: Use `role="navigation"`, keyboard focusable controls and ARIA attributes.
+3. Q: How to make cards responsive? A: Use Bootstrap grid (col-*) — they stack on small screens.
+4. Q: How to include charts? A: Use Chart.js in the card body and feed data via JS.
+5. Q: How to test responsiveness? A: Browser devtools device toolbar + real devices.
+6. Q: How to optimize load time? A: Minify CSS/JS, use CDNs, lazy-load heavy assets.
+7. Q: How to handle large tables? A: Use pagination, server-side search, and virtualization.
+8. Q: How to persist user preferences (theme)? A: Save to `localStorage` and apply on load.
+9. Q: What is progressive enhancement? A: Provide core functionality in HTML/CSS; enhance with JS.
+10. Q: How to secure admin dashboard? A: Authentication, HTTPS, input validation, role-based access control.
+
+---
+
+# Assignment 2 — JavaScript registration & push to array/localStorage using AJAX POST and display list on new page
+
+## Theory (5 points)
+
+1. Forms & validation: capture user inputs and validate client-side.
+2. localStorage: persistent client-side key-value store for small datasets.
+3. AJAX POST: asynchronous requests to server endpoints (or mock) using `fetch`/`XMLHttpRequest`.
+4. Single-page vs multi-page: data can be passed via `localStorage` or server.
+5. JSON serialization/deserialization with `JSON.stringify`/`JSON.parse`.
+
+## Software & Hardware
+
+* **Software:** Code editor, browser. Optional server (Node/Express) if you want real POST handlers.
+* **Hardware:** any PC.
+
+## Algorithm
+
+1. Build registration form and client-side validation.
+2. On submit, create a user object.
+3. Send object via `fetch` POST to server OR save to `localStorage`.
+4. After success, redirect to `list.html`.
+5. On `list.html`, read stored array and render table.
+
+## Working
+
+* Demo supports either using a mock POST (simulated) or real endpoint. If offline, use localStorage only.
+
+## Code (index.html + script)
+
+**register.html**
+
+```html
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Register</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-3">
+  <div class="container">
+    <h3>Register</h3>
+    <form id="regForm">
+      <div class="mb-2"><input required name="name" class="form-control" placeholder="Full name"></div>
+      <div class="mb-2"><input required name="email" type="email" class="form-control" placeholder="Email"></div>
+      <div class="mb-2"><input required name="phone" class="form-control" placeholder="Phone"></div>
+      <button class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+<script>
+const form = document.getElementById('regForm');
+form.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const fd = new FormData(form);
+  const user = { name: fd.get('name'), email: fd.get('email'), phone: fd.get('phone') };
+
+  // Option A: POST to server (uncomment and provide URL)
+  // const res = await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json'}, body:JSON.stringify(user)});
+  // const data = await res.json();
+
+  // Option B: save to localStorage (offline safe)
+  const arr = JSON.parse(localStorage.getItem('users')||'[]');
+  arr.push({...user, id:Date.now()});
+  localStorage.setItem('users', JSON.stringify(arr));
+  // redirect to list page
+  location.href = 'list.html';
+});
+</script>
+</body>
+</html>
+```
+
+**list.html**
+
+```html
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Users</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"></head>
+<body class="p-3">
+<div class="container">
+  <h3>Registered Users</h3>
+  <table class="table" id="tbl"><thead><tr><th>Name</th><th>Email</th><th>Phone</th></tr></thead><tbody></tbody></table>
+</div>
+<script>
+const tbody = document.querySelector('#tbl tbody');
+const arr = JSON.parse(localStorage.getItem('users')||'[]');
+arr.forEach(u=>{
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${u.name}</td><td>${u.email}</td><td>${u.phone}</td>`;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
+```
+
+## Conclusion
+
+This demonstrates capturing user data, persisting locally, and presenting it on another page. Replace localStorage with server endpoints for production.
+
+## 10 Viva Q&A
+
+1. Q: Why localStorage? A: Simple persistent client-side storage for small datasets.
+2. Q: Downsides of localStorage? A: Limited size, insecure, synchronous API.
+3. Q: What to use instead for large data? A: IndexedDB or a backend DB.
+4. Q: How does fetch POST work? A: Sends async HTTP request with method, headers, body.
+5. Q: How to validate input? A: HTML5 attributes and JS checks (regex).
+6. Q: How to secure POST data? A: Use HTTPS and server-side validation/sanitization.
+7. Q: How to delete a user? A: Remove from array and save back to localStorage.
+8. Q: How to avoid duplicate emails? A: Check array before push.
+9. Q: How to persist across browsers? A: You can’t — use server-side DB.
+10. Q: How to test AJAX offline? A: Use mock fetch or save locally (localStorage).
+
+---
+
+# Assignment 3 — (a) GitHub repo via Git, (b) Docker container environment, (c) Angular app (Register/Login/Profile)
+
+I'll cover each subpart.
+
+## 3a — GitHub & Git commands
+
+### Theory (5 points)
+
+1. Version control tracks changes, supports collaboration.
+2. Git is distributed: each clone has full history.
+3. Commits are snapshots with message.
+4. Branching allows feature work in isolation.
+5. Remote repositories (GitHub) host central copies and provide collaboration tools (PRs).
+
+### Requirements
+
+* Git installed, GitHub account, network.
+
+### Commands / Algorithm (quick)
+
+1. `git init`
+2. `git add .`
+3. `git commit -m "Initial commit"`
+4. `git branch -M main`
+5. `git remote add origin git@github.com:username/repo.git`
+6. `git push -u origin main`
+
+### Working
+
+* Local commit history pushed to remote; collaborators clone/pull/push.
+
+### Conclusion
+
+Use branches and PRs. Commit often and write clear messages.
+
+### 10 Viva Q&A
+
+(Examples: difference between `git pull` and `git fetch`; what is rebase; what is merge conflict and how to resolve; how to revert commit; what is `.gitignore` etc.)
+
+---
+
+## 3b — Create Docker Container Environment (NVIDIA Docker or other)
+
+### Theory (5 points)
+
+1. Containers package app + dependencies for reproducible runtime.
+2. Docker images are layered filesystem snapshots.
+3. NVIDIA Docker (nvidia-container-toolkit) exposes GPU devices into containers.
+4. Use `Dockerfile` to define build.
+
+### Requirements
+
+* Docker Engine, (for GPU) NVIDIA drivers + `nvidia-docker2` or `nvidia-container-toolkit`.
+* Hardware: host machine; GPU if using NVIDIA docker.
+
+### Algorithm / Steps
+
+1. Install Docker.
+2. For GPU: install NVIDIA drivers and nvidia toolkit.
+3. Create Dockerfile for app.
+4. Build image: `docker build -t myapp:1.0 .`
+5. Run container: `docker run --gpus all -p 3000:3000 myapp:1.0`.
+
+### Example Dockerfile (Node app)
+
+```dockerfile
+FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+EXPOSE 3000
+CMD ["npm","start"]
+```
+
+### Conclusion
+
+Containers simplify deployment; GPUs require NVIDIA toolkit.
+
+### 10 Viva Q&A
+
+(e.g., difference between image and container, how to persist data with volumes, what is Docker Compose, how to limit CPU/memory, security best practices)
+
+---
+
+## 3c — Angular application (Register, Login, Profile)
+
+### Theory (5 points)
+
+1. Angular is an SPA framework using TypeScript, components, services, and dependency injection.
+2. Reactive forms vs template-driven forms for validation.
+3. Routing to switch views (register/login/profile).
+4. Services handle API calls & auth state.
+5. Observables (RxJS) for async flows.
+
+### Requirements
+
+* Node.js & npm, Angular CLI (`npm i -g @angular/cli`), code editor.
+
+### Algorithm
+
+1. `ng new myapp --routing`
+2. Create components: `ng g c auth/register auth/login profile`
+3. Create `AuthService` to handle register/login (POST to backend).
+4. Protect profile route with `AuthGuard`.
+5. Store JWT in `localStorage` and attach to requests via `HttpInterceptor`.
+
+### Key code snippets (simplified)
+
+**auth.service.ts**
+
+```ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+@Injectable({providedIn:'root'})
+export class AuthService {
+  api = 'http://localhost:3000/api';
+  constructor(private http: HttpClient) {}
+  register(user:any){ return this.http.post(`${this.api}/register`, user); }
+  login(creds:any){ return this.http.post(`${this.api}/login`, creds); }
+  saveToken(t:string){ localStorage.setItem('token', t); }
+  getProfile(){ return this.http.get(`${this.api}/me`); }
+}
+```
+
+**register.component.ts** (submit)
+
+```ts
+this.auth.register(this.form.value).subscribe({
+  next: res => { alert('Registered'); this.router.navigate(['/login']); },
+  error: err => console.error(err)
+});
+```
+
+**app-routing.module.ts**
+
+```ts
+const routes = [
+  { path:'register', component:RegisterComponent },
+  { path:'login', component:LoginComponent },
+  { path:'profile', component:ProfileComponent, canActivate:[AuthGuard] },
+  { path:'', redirectTo:'login', pathMatch:'full'}
+];
+```
+
+### Conclusion
+
+Angular structured architecture is ideal for larger SPAs; combine with Node backend for auth & data.
+
+### 10 Viva Q&A
+
+(e.g., What is change detection; difference between components and services; how to use `ngOnInit`; JWT flow; what is an interceptor)
+
+---
+
+# Assignment 4 — (a) Node.js static server; (b) Four APIs (CRUD) using Node/Express/MongoDB for Assignment 3.c (users)
+
+## 4a — Node.js Application serving static site
+
+### Theory (5 points)
+
+1. Node.js can serve static files via Express `express.static`.
+2. Non-blocking I/O makes Node suitable for I/O bound apps.
+3. Middlewares process requests before handlers.
+4. Use environment variables for config.
+5. For production, use process manager (pm2) and reverse proxy (NGINX).
+
+### Requirements
+
+* Node.js, npm, Express.
+
+### Code: `server.js` (static)
+
+```js
+const express = require('express');
+const path = require('path');
+const app = express();
+app.use(express.json());
+app.use(express.static(path.join(__dirname,'public'))); // put register.html, list.html here
+app.get('/ping',(req,res)=>res.send('ok'));
+const PORT = process.env.PORT||3000;
+app.listen(PORT, ()=>console.log('Server started',PORT));
+```
+
+## 4b — Four APIs for CRUD on users (register/login/profile) using Express + MongoDB
+
+### Theory (5 points)
+
+1. RESTful design: use HTTP verbs for actions (GET, POST, PUT, DELETE).
+2. MongoDB (NoSQL) stores JSON-like documents; Mongoose maps schemas.
+3. Use JWT for stateless authentication.
+4. Validate and sanitize inputs server-side.
+5. Handle errors and return proper HTTP status codes.
+
+### Requirements
+
+* Node, npm, Express, Mongoose, MongoDB (local or Atlas), `jsonwebtoken`, `bcrypt`.
+
+### Algorithm / Endpoints
+
+1. `POST /api/users` — create user (register).
+2. `POST /api/auth` — login (returns JWT).
+3. `GET /api/users/:id` — read user (protected).
+4. `PUT /api/users/:id` — update user (protected).
+5. `DELETE /api/users/:id` — delete user (protected).
+   (You said four APIs — the core CRUD are POST, GET, PUT, DELETE; login can be additional auth endpoint.)
+
+### Example code (concise)
+
+**models/User.js**
+
+```js
+const mongoose = require('mongoose');
+const userSchema = new mongoose.Schema({
+  name:String, email:{type:String, unique:true}, password:String, phone:String
+});
+module.exports = mongoose.model('User', userSchema);
+```
+
+**server.js** (with CRUD)
+
+```js
+const express = require('express'), mongoose = require('mongoose'), bcrypt = require('bcrypt'), jwt = require('jsonwebtoken');
+const User = require('./models/User');
+const app = express();
+app.use(express.json());
+mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/mydb');
+
+const auth = (req,res,next)=>{
+  const token = req.header('Authorization')?.replace('Bearer ','');
+  if(!token) return res.status(401).send('No token');
+  try{ req.user = jwt.verify(token, 'secretkey'); next(); } catch(e){ res.status(401).send('Invalid token'); }
+};
+
+// Register
+app.post('/api/users', async (req,res)=>{
+  const {name,email,password,phone} = req.body;
+  const hash = await bcrypt.hash(password,10);
+  try{
+    const u = await User.create({name,email,password:hash,phone});
+    res.status(201).json({id:u._id, name:u.name, email:u.email});
+  }catch(e){ res.status(400).json({error:e.message}); }
+});
+
+// Login (auth endpoint)
+app.post('/api/auth', async (req,res)=>{
+  const {email,password} = req.body;
+  const u = await User.findOne({email});
+  if(!u) return res.status(400).send('Invalid credentials');
+  const ok = await bcrypt.compare(password, u.password);
+  if(!ok) return res.status(400).send('Invalid credentials');
+  const token = jwt.sign({id:u._id,email:u.email}, 'secretkey', {expiresIn:'2h'});
+  res.json({token});
+});
+
+// Read user
+app.get('/api/users/:id', auth, async (req,res)=>{
+  if(req.user.id !== req.params.id) return res.status(403).send('Forbidden');
+  const u = await User.findById(req.params.id).select('-password');
+  res.json(u);
+});
+
+// Update user
+app.put('/api/users/:id', auth, async (req,res)=>{
+  if(req.user.id !== req.params.id) return res.status(403).send('Forbidden');
+  const updates = req.body;
+  if(updates.password) updates.password = await bcrypt.hash(updates.password,10);
+  const u = await User.findByIdAndUpdate(req.params.id, updates, {new:true}).select('-password');
+  res.json(u);
+});
+
+// Delete user
+app.delete('/api/users/:id', auth, async (req,res)=>{
+  if(req.user.id !== req.params.id) return res.status(403).send('Forbidden');
+  await User.findByIdAndDelete(req.params.id);
+  res.json({msg:'deleted'});
+});
+
+app.listen(3000, ()=>console.log('API listening'));
+```
+
+> **Note:** Replace `'secretkey'` with `process.env.JWT_SECRET` in real deployments.
+
+## Conclusion
+
+This stack is standard for small full-stack apps. Keep secrets out of code and validate inputs.
+
+## 10 Viva Q&A
+
+(e.g., difference between SQL and NoSQL, why hashing passwords, JWT vs sessions, status code meanings, how to scale the API)
+
+---
+
+# Assignment 5 — (a) Simple Mobile Website using jQuery Mobile (b) Deploy/Host on AWS VPC or Elastic Beanstalk
+
+## 5a — jQuery Mobile site
+
+### Theory (5 points)
+
+1. jQuery Mobile provides UI widgets optimized for touch/mobile (buttons, panels, listviews).
+2. Single HTML file can contain multiple `data-role="page"` sections for navigation.
+3. Progressive enhancement: works with older browsers.
+4. Lightweight interactions through jQuery event binding.
+5. Theme swatches to style mobile UI.
+
+### Requirements
+
+* jQuery, jQuery Mobile (CDN). Browser.
+
+### Algorithm
+
+1. Create `index.html`, include jQuery & jQuery Mobile CSS+JS.
+2. Define pages with `data-role="page"`.
+3. Add form, lists, and simple links.
+
+### Example `index.html`
+
+```html
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<title>Mobile Site</title>
+</head>
+<body>
+<div data-role="page" id="home">
+  <div data-role="header"><h1>FAST Mobile</h1></div>
+  <div role="main" class="ui-content">
+    <a href="#register" class="ui-btn">Register</a>
+    <a href="#list" class="ui-btn">View Users</a>
+  </div>
+</div>
+
+<div data-role="page" id="register">
+  <div data-role="header"><h1>Register</h1></div>
+  <div class="ui-content">
+    <form id="mform"><input name="name" placeholder="Name"><input name="email" placeholder="Email"><button type="submit" class="ui-btn">Submit</button></form>
+  </div>
+</div>
+
+<div data-role="page" id="list">
+  <div data-role="header"><h1>Users</h1></div>
+  <div class="ui-content"><ul id="users" data-role="listview"></ul></div>
+</div>
+
+<script>
+$('#mform').on('submit', function(e){
+  e.preventDefault();
+  const data = {name: this.name.value, email:this.email.value};
+  const arr = JSON.parse(localStorage.getItem('users')||'[]'); arr.push(data); localStorage.setItem('users', JSON.stringify(arr));
+  $.mobile.navigate('#list');
+});
+$(document).on('pagebeforeshow','#list', function(){ const arr = JSON.parse(localStorage.getItem('users')||'[]'); $('#users').empty(); arr.forEach(u=>$('#users').append(`<li>${u.name}<p>${u.email}</p></li>`)); $('#users').listview().listview('refresh'); });
+</script>
+</body>
+</html>
+```
+
+## 5b — Deploy/Host on AWS VPC or Elastic Beanstalk
+
+### Short Theory (5 points)
+
+1. Elastic Beanstalk (EB) is PaaS for deploying web apps quickly — it handles provisioning servers, load balancing, autoscaling.
+2. VPC is network isolation — you create subnets, security groups, and deploy resources (EC2, RDS) into it.
+3. EB can be used inside a VPC for secure deployments.
+4. Use IAM roles for secure permissions.
+5. For production, use HTTPS via ALB and ACM certificates.
+
+### Requirements
+
+* AWS account, AWS CLI, EB CLI (optional), IAM user with required permissions.
+
+### Steps for Elastic Beanstalk (recommended for this course)
+
+1. Prepare your app (Node `server.js` plus `package.json` or static site in `public/`).
+2. Install EB CLI: `pip install awsebcli` or `brew install awsebcli`.
+3. Initialize: `eb init -p node.js my-app --region us-east-1` and configure.
+4. Create environment: `eb create my-app-env` (choose load-balancer or single instance).
+5. Deploy: `eb deploy`.
+6. Open: `eb open`.
+7. For environment variables: `eb setenv MONGO_URI=... JWT_SECRET=...`.
+8. To use a VPC: when creating environment choose existing VPC & subnets or configure via console.
+
+### Quick steps for static site to S3 + CloudFront (alternative)
+
+1. `aws s3 mb s3://mybucket`
+2. `aws s3 sync public/ s3://mybucket --acl public-read`
+3. Configure CloudFront for caching + HTTPS.
+
+### Conclusion
+
+EB is easiest for full-stack apps; S3+CloudFront is cost-efficient for static sites. Use VPC for private networks and RDS.
+
+### 10 Viva Q&A
+
+(e.g., difference between EB and EC2, what is VPC, how to secure environment variables, what is load balancer, steps to rollback deployment)
+
+---
+
+# Final notes & checklist (what to submit)
+
+* For each assignment include: source code, `README.md` with setup steps, screenshots, and (if required) a short demo video.
+* If a backend is required (Assign 4 + 3c), provide a `docker-compose.yml` for local dev:
+
+```yaml
+version: '3'
+services:
+  api:
+    build: .
+    ports: ['3000:3000']
+    environment: ['MONGO_URI=mongodb://mongo:27017/mydb']
+    depends_on: ['mongo']
+  mongo:
+    image: mongo:6
+    volumes: ['mongo-data:/data/db']
+volumes: { mongo-data: {} }
+```
+
+* Security reminder: never commit secrets (DB URIs, JWT secret). Use `.env` and `.gitignore`.
