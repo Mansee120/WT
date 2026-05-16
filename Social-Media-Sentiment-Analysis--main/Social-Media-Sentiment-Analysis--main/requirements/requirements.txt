@@ -1,0 +1,10 @@
+# Requirements for Social Media Sentiment Analysis project
+pandas
+numpy
+matplotlib
+nltk
+textblob
+vaderSentiment
+scikit-learn
+jupyter
+wordcloud
